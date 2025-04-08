@@ -57,3 +57,10 @@ Cypress.Commands.add('checkout',() => {
     cy.get('[data-test="finish"]').should('be.visible').click()
     cy.url().should('include', 'checkout-complete.html')
 })
+
+Cypress.Commands.add('dynamicfilename', (prefix) => {
+    const todaydate = new Date()
+    const formattedDate = `${String(todaydate.getMonth()+1).padStart(2, '0')}-${String(todaydate.getDate()).padStart(2, '0')}-${String(todaydate.getFullYear()).slice(-2)}`;
+    const fileName = `${prefix}-${formattedDate}`;
+    cy.screenshot(fileName);
+})

@@ -12,7 +12,7 @@ describe('E-commerce test flow', () => {
      // Verify we're on the inventory page after login
      cy.url().should('include', '/inventory.html')
      cy.get('.inventory_list').should('be.visible')
-     cy.screenshot()
+     cy.dynamicfilename("login")
    });
  
    it('Should successfully add to cart', () => {
@@ -21,7 +21,7 @@ describe('E-commerce test flow', () => {
      // Verify cart badge appears with 1 item
      // Optionally, navigate to the cart and verify item is listed
      cy.checkcart()
-     cy.screenshot()
+     cy.dynamicfilename("add-to-cart")
    });
 
    it('Should successfully checkout', () => {
@@ -33,7 +33,7 @@ describe('E-commerce test flow', () => {
 
     // Verify that there checkout is possible
     cy.checkout()
-    cy.screenshot()
+    cy.dynamicfilename('checkout')
 
     cy.get('[data-test="back-to-products"]').should('be.visible').click()
     cy.url().should('include', 'inventory.html')
