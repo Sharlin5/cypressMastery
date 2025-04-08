@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1", 
-    "login-test": "npx cypress run  --spec 'cypress/e2e/login.cy.js' --browser chrome"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "login-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/login.cy.js' --browser chrome",
+    "cart-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/cart.cy.js' --browser chrome"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "cypress": "^14.2.1"
+    "cypress": "^14.2.1",
+    "cypress-mochawesome-reporter": "^3.8.2"
   }
 }
