@@ -12,15 +12,21 @@ describe('Registration test flow', () => {
     })
 
     it('Should successfully register the user', () => {
-        cy.register()
+        cy.register('Johnny', 'password123')
     })
 
     it('Should successfully login with registered user', () => {
-        cy.register()
+        cy.register('Johnny', 'password123')
+
+        cy.login('Johnny', 'password123')
+    })
+
+    it('Should successfully logout with registered user after login', () => {
+        cy.register('Johnny', 'password123')
+
+        cy.login('Johnny', 'password123')
 
         cy.get('#leftPanel > ul > :nth-child(8) > a').should('be.visible').click()
-        cy.get('#loginPanel > form > :nth-child(2)').type('Johnny2')
-        cy.get(':nth-child(4) > .input').type('password123')
-        cy.get(':nth-child(5) > .button').should('be.visible').click()
+        
     })
 })

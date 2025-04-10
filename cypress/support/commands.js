@@ -68,7 +68,7 @@ Cypress.Commands.add('dynamicfilename', (prefix) => {
     cy.screenshot(filename);
 })
 
-Cypress.Commands.add('register', () => {
+Cypress.Commands.add('register', (username, password) => {
     cy.get('input[id="customer.firstName"]').type('John')
     cy.get('input[id="customer.lastName"]').type('Doe')
     cy.get('input[id="customer.address.street"]').type('Don Pedro')
@@ -77,10 +77,16 @@ Cypress.Commands.add('register', () => {
     cy.get('input[id="customer.address.zipCode"]').type('1440')
     cy.get('input[id="customer.phoneNumber"]').type('09123445678')
     cy.get('input[id="customer.ssn"]').type('10-2034-2345')
-    cy.get('input[id="customer.username"]').type('Johnny')
-    cy.get('input[id="customer.password"]').type('password123')
-    cy.get('input[id="repeatedPassword"]').type('password123')
+    cy.get('input[id="customer.username"]').type(username)
+    cy.get('input[id="customer.password"]').type(password)
+    cy.get('input[id="repeatedPassword"]').type(password)
     cy.get('[colspan="2"] > .button').should('be.visible').click() //click register
-    cy.contains('Johnny')
-    
+    cy.contains(username)
+})
+
+Cypress.Commands.add('login', (username, password) => {
+    cy.get('#leftPanel > ul > :nth-child(8) > a').should('be.visible').click()//logout
+    cy.get('#loginPanel > form > :nth-child(2)').type(username)
+    cy.get(':nth-child(4) > .input').type(password)
+    cy.get(':nth-child(5) > .button').should('be.visible').click()//login
 })
