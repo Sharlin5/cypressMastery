@@ -26,8 +26,8 @@
 
 Cypress.Commands.add('auth', (username, password) =>{
     cy.visit('https://www.saucedemo.com/');
-    cy.get('[data-test="username"]').type("standard_user")
-    cy.get('[data-test="password"]').type("secret_sauce")
+    cy.get('[data-test="username"]').type(username)
+    cy.get('[data-test="password"]').type(password)
     cy.get('[data-test="login-button"]').click()
 })
 
@@ -49,18 +49,21 @@ Cypress.Commands.add('checkcart',() => {
 Cypress.Commands.add('checkout',() => {
     cy.get('[data-test="checkout"]').should('be.visible').click()
     cy.url().should('include', 'checkout-step-one.html')
+    cy.dynamicfilename('checkout-one')
     cy.get('[data-test="firstName"]').should('be.visible').type('Sharlin')
     cy.get('[data-test="lastName"]').should('be.visible').type('Tang')
     cy.get('[data-test="postalCode"]').should('be.visible').type('1440')
     cy.get('[data-test="continue"]').should('be.visible').click()
     cy.url().should('include', 'checkout-step-two.html')
+    cy.dynamicfilename('checkout-two')
     cy.get('[data-test="finish"]').should('be.visible').click()
     cy.url().should('include', 'checkout-complete.html')
+    cy.dynamicfilename('checkout-complete')
 })
 
 Cypress.Commands.add('dynamicfilename', (prefix) => {
     const todaydate = new Date()
     const formattedDate = `${String(todaydate.getMonth()+1).padStart(2, '0')}-${String(todaydate.getDate()).padStart(2, '0')}-${String(todaydate.getFullYear()).slice(-2)}`;
-    const fileName = `${prefix}-${formattedDate}`;
-    cy.screenshot(fileName);
+    const filename = `${prefix}-${formattedDate}`;
+    cy.screenshot(filename);
 })

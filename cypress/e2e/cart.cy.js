@@ -31,10 +31,10 @@ describe('E-commerce test flow', () => {
     // Navigate to cart
     cy.checkcart()
 
-    // Verify that there checkout is possible
+    // Verify that checkout is possible
     cy.checkout()
-    cy.dynamicfilename('checkout')
 
+    // Verify that user can return to main page
     cy.get('[data-test="back-to-products"]').should('be.visible').click()
     cy.url().should('include', 'inventory.html')
    })
