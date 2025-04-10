@@ -68,25 +68,31 @@ Cypress.Commands.add('dynamicfilename', (prefix) => {
     cy.screenshot(filename);
 })
 
-Cypress.Commands.add('register', (username, password) => {
-    cy.get('input[id="customer.firstName"]').type('John')
-    cy.get('input[id="customer.lastName"]').type('Doe')
-    cy.get('input[id="customer.address.street"]').type('Don Pedro')
-    cy.get('input[id="customer.address.city"]').type('Valenzuela')
-    cy.get('input[id="customer.address.state"]').type('NCR')
-    cy.get('input[id="customer.address.zipCode"]').type('1440')
-    cy.get('input[id="customer.phoneNumber"]').type('09123445678')
-    cy.get('input[id="customer.ssn"]').type('10-2034-2345')
-    cy.get('input[id="customer.username"]').type(username)
-    cy.get('input[id="customer.password"]').type(password)
-    cy.get('input[id="repeatedPassword"]').type(password)
-    cy.get('[colspan="2"] > .button').should('be.visible').click() //click register
-    cy.contains(username)
+Cypress.Commands.add('register', () => {
+    cy.fixture('customers.json').then((customers) => {
+        cy.get('input[id="customer.firstName"]').type(customers[0].firstname)
+        cy.get('input[id="customer.lastName"]').type(customers[0].lastname)
+        cy.get('input[id="customer.address.street"]').type(customers[0].street)
+        cy.get('input[id="customer.address.city"]').type(customers[0].city)
+        cy.get('input[id="customer.address.state"]').type(customers[0].state)
+        cy.get('input[id="customer.address.zipCode"]').type(customers[0].zipcode)
+        cy.get('input[id="customer.phoneNumber"]').type(customers[0].phoneNumber)
+        cy.get('input[id="customer.ssn"]').type(customers[0].ssn)
+        cy.get('input[id="customer.username"]').type(customers[0].username)
+        cy.get('input[id="customer.password"]').type(customers[0].password)
+        cy.get('input[id="repeatedPassword"]').type(customers[0].password)
+        cy.get('[colspan="2"] > .button').should('be.visible').click() //click register
+        cy.contains(customers[0].username)
+    })
+    
+    
 })
 
-Cypress.Commands.add('login', (username, password) => {
+Cypress.Commands.add('login', () => {
     cy.get('#leftPanel > ul > :nth-child(8) > a').should('be.visible').click()//logout
-    cy.get('#loginPanel > form > :nth-child(2)').type(username)
-    cy.get(':nth-child(4) > .input').type(password)
+    cy.fixture('customers.json').then((customers) => {
+    cy.get('#loginPanel > form > :nth-child(2)').type(customers[0].username)
+    cy.get(':nth-child(4) > .input').type(customers[0].password)
+    })
     cy.get(':nth-child(5) > .button').should('be.visible').click()//login
 })

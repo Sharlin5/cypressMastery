@@ -12,19 +12,19 @@ describe('Registration test flow', () => {
     })
 
     it('Should successfully register the user', () => {
-        cy.register('Johnny', 'password123')
+        cy.register()
     })
 
     it('Should successfully login with registered user', () => {
-        cy.register('Johnny', 'password123')
+        cy.register()
 
-        cy.login('Johnny', 'password123')
+        cy.login()
     })
 
     it('Should successfully logout with registered user after login', () => {
-        cy.register('Johnny', 'password123')
+        cy.register()
 
-        cy.login('Johnny', 'password123')
+        cy.login()
 
         cy.get('#leftPanel > ul > :nth-child(8) > a').should('be.visible').click()
         
