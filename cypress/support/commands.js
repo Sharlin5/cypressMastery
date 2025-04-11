@@ -24,7 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-const { generateCustomerData } = require("./fakersutils");
+import { generateCustomerData } from "./fakersutils";
 
 Cypress.Commands.add('auth', (username, password) =>{
     cy.visit('https://www.saucedemo.com/');
@@ -70,26 +70,40 @@ Cypress.Commands.add('dynamicfilename', (prefix) => {
     cy.screenshot(filename);
 })
 
-Cypress.Commands.add('register', (i) => {
-    cy.fixture('customers.json').then((customers) => {
-        cy.get('input[id="customer.firstName"]').type(customers[i].firstname)
-        cy.get('input[id="customer.lastName"]').type(customers[i].lastname)
-        cy.get('input[id="customer.address.street"]').type(customers[i].street)
-        cy.get('input[id="customer.address.city"]').type(customers[i].city)
-        cy.get('input[id="customer.address.state"]').type(customers[i].state)
-        cy.get('input[id="customer.address.zipCode"]').type(customers[i].zipcode)
-        cy.get('input[id="customer.phoneNumber"]').type(customers[i].phoneNumber)
-        cy.get('input[id="customer.ssn"]').type(customers[i].ssn)
-        cy.get('input[id="customer.username"]').type(customers[i].username)
-        cy.get('input[id="customer.password"]').type(customers[i].password)
-        cy.get('input[id="repeatedPassword"]').type(customers[i].password)
+Cypress.Commands.add('register', (jsonSource) => {
+    cy.readFile('cypress/fixtures/'+jsonSource).then((customers) => {
+        cy.get('input[id="customer.firstName"]').type(customers.firstName)
+        cy.get('input[id="customer.lastName"]').type(customers.lastName)
+        cy.get('input[id="customer.address.street"]').type(customers.address)
+        cy.get('input[id="customer.address.city"]').type(customers.city)
+        cy.get('input[id="customer.address.state"]').type(customers.state)
+        cy.get('input[id="customer.address.zipCode"]').type(customers.zipCode)
+        cy.get('input[id="customer.phoneNumber"]').type(customers.phoneNumber)
+        cy.get('input[id="customer.ssn"]').type(customers.ssn)
+        cy.get('input[id="customer.username"]').type(customers.username)
+        cy.get('input[id="customer.password"]').type(customers.password)
+        cy.get('input[id="repeatedPassword"]').type(customers.password)
         cy.get('[colspan="2"] > .button').should('be.visible').click() //click register
-        cy.contains(customers[i].username)
+        cy.contains(customers.username)
     })
+    // cy.fixture(jsonSource).then((customers) => {
+    //     cy.get('input[id="customer.firstName"]').type(customers.firstName)
+    //     cy.get('input[id="customer.lastName"]').type(customers.lastName)
+    //     cy.get('input[id="customer.address.street"]').type(customers.address)
+    //     cy.get('input[id="customer.address.city"]').type(customers.city)
+    //     cy.get('input[id="customer.address.state"]').type(customers.state)
+    //     cy.get('input[id="customer.address.zipCode"]').type(customers.zipCode)
+    //     cy.get('input[id="customer.phoneNumber"]').type(customers.phoneNumber)
+    //     cy.get('input[id="customer.ssn"]').type(customers.ssn)
+    //     cy.get('input[id="customer.username"]').type(customers.username)
+    //     cy.get('input[id="customer.password"]').type(customers.password)
+    //     cy.get('input[id="repeatedPassword"]').type(customers.password)
+    //     cy.get('[colspan="2"] > .button').should('be.visible').click() //click register
+    //     cy.contains(customers.username)
+    // })
 })
 
 Cypress.Commands.add('registerFaker', (userData) => {
-    
     cy.get('input[id="customer.firstName"]').type(userData.firstName)
     cy.get('input[id="customer.lastName"]').type(userData.lastName)
     cy.get('input[id="customer.address.street"]').type(userData.address)
@@ -105,11 +119,11 @@ Cypress.Commands.add('registerFaker', (userData) => {
     cy.contains(userData.username)
 })
 
-Cypress.Commands.add('login', (i) => {
+Cypress.Commands.add('login', (jsonSource) => {
     cy.get('#leftPanel > ul > :nth-child(8) > a').should('be.visible').click()//logout
-    cy.fixture('customers.json').then((customers) => {
-    cy.get('#loginPanel > form > :nth-child(2)').type(customers[i].username)
-    cy.get(':nth-child(4) > .input').type(customers[i].password)
+    cy.fixture(jsonSource).then((customers) => {
+    cy.get('#loginPanel > form > :nth-child(2)').type(customers.username)
+    cy.get(':nth-child(4) > .input').type(customers.password)
     })
     cy.get(':nth-child(5) > .button').should('be.visible').click()//login
 })
@@ -121,7 +135,8 @@ Cypress.Commands.add('loginFaker', (userData) => {
     cy.get(':nth-child(5) > .button').should('be.visible').click()//login
 })
 
-/*Cypress.Commands.add('generateData' , () => {
+Cypress.Commands.add('generateData' , () => {
     let testData = generateCustomerData()
-    cy.writeFile('cypress/fixtures/testData.json', testData);
-  });*/
+    cy.writeFile('cypress/fixtures/testData.json', testData)
+    
+});

@@ -1,14 +1,12 @@
-[
-    {
-        "firstname": "John",
-        "lastname": "Doe",
-        "street": "Don Pedro",
-        "city": "Valenzuela",
-        "state": "NCR",
-        "zipcode": "1440",
-        "phoneNumber": "09123445678",
-        "ssn": "1234556887463",
-        "username": "JohnnyDoe",
-        "password": "password123"
-    }
-]
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "address": "Don Pedro",
+    "city": "Valenzuela",
+    "state": "NCR",
+    "zipCode": "1440",
+    "phoneNumber": "09123445678",
+    "ssn": "1234556887463",
+    "username": "JohnnyDoe",
+    "password": "password123"
+}
