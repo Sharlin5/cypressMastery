@@ -24,6 +24,8 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+/// <reference types ="cypress" />
+
 import { generateCustomerData } from "./fakersutils";
 
 Cypress.Commands.add('auth', (username, password) =>{
@@ -45,7 +47,7 @@ Cypress.Commands.add('checkcart',() => {
     cy.get('.shopping_cart_link').click()
     cy.url().should('include', '/cart.html')
     cy.get('.cart_item').should('have.length', 1)
-    cy.get('.inventory_item_name').should('contain', 'Sauce Labs Backpack')
+    cy.get('.inventory_item_name').should('be.visible').and('contain', 'Sauce Labs Backpack')
 })
 
 Cypress.Commands.add('checkout',() => {
@@ -86,21 +88,6 @@ Cypress.Commands.add('register', (jsonSource) => {
         cy.get('[colspan="2"] > .button').should('be.visible').click() //click register
         cy.contains(customers.username)
     })
-    // cy.fixture(jsonSource).then((customers) => {
-    //     cy.get('input[id="customer.firstName"]').type(customers.firstName)
-    //     cy.get('input[id="customer.lastName"]').type(customers.lastName)
-    //     cy.get('input[id="customer.address.street"]').type(customers.address)
-    //     cy.get('input[id="customer.address.city"]').type(customers.city)
-    //     cy.get('input[id="customer.address.state"]').type(customers.state)
-    //     cy.get('input[id="customer.address.zipCode"]').type(customers.zipCode)
-    //     cy.get('input[id="customer.phoneNumber"]').type(customers.phoneNumber)
-    //     cy.get('input[id="customer.ssn"]').type(customers.ssn)
-    //     cy.get('input[id="customer.username"]').type(customers.username)
-    //     cy.get('input[id="customer.password"]').type(customers.password)
-    //     cy.get('input[id="repeatedPassword"]').type(customers.password)
-    //     cy.get('[colspan="2"] > .button').should('be.visible').click() //click register
-    //     cy.contains(customers.username)
-    // })
 })
 
 Cypress.Commands.add('registerFaker', (userData) => {
@@ -138,5 +125,18 @@ Cypress.Commands.add('loginFaker', (userData) => {
 Cypress.Commands.add('generateData' , () => {
     let testData = generateCustomerData()
     cy.writeFile('cypress/fixtures/testData.json', testData)
-    
 });
+
+Cypress.Commands.add('saveCart', () => {
+    cy.window().then((win) => {
+      const cart = win.localStorage.getItem('cart-contents') || '[]';
+      Cypress.env('savedCart', cart);
+    });
+  });
+
+  Cypress.Commands.add('restoreCart', () => {
+    const cart = Cypress.env('savedCart') || '[]';
+    cy.window().then((win) => {
+      win.localStorage.setItem('cart-contents', cart);
+    });
+  });
