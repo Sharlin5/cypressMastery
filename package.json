@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "login-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/login.cy.js' --browser chrome",
-    "cart-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/cart.cy.js' --browser chrome"
+    "cart-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/cart.cy.js' --browser chrome",
+    "registration-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/registration.cy.js' --browser chrome",
+    "auto-prac-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/automation-exercise.cy.js' --browser chrome"
   },
   "keywords": [],
   "author": "",
