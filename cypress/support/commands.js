@@ -173,6 +173,7 @@ Cypress.Commands.add('saveCart', () => {
         cy.get('[data-qa="last_name"]').type(user.lastName).should('have.value', user.lastName)
         cy.get('[data-qa="company"]').type(user.company).should('have.value', user.company)
         cy.get('[data-qa="address"]').type(user.address).should('have.value', user.address)
+        cy.get('[data-qa="address2"]').type(user.address2).should('have.value', user.address2)
         cy.get('[data-qa="country"]').select(user.country).should('have.value', user.country)
         cy.get('[data-qa="state"]').type(user.state).should('have.value', user.state)
         cy.get('[data-qa="city"]').type(user.city).should('have.value', user.city)
@@ -191,14 +192,14 @@ Cypress.Commands.add('saveCart', () => {
   Cypress.Commands.add('addProduct', () => {
     cy.get('.features_items > :nth-child(3) > .product-image-wrapper > .single-products > .productinfo').should('be.visible').trigger('mouseover')
     cy.get('.features_items > :nth-child(3) > .product-image-wrapper > .single-products > .productinfo > .btn').should('be.visible').click()
-  })
+})
 
   Cypress.Commands.add('verifyDetails', (type) => {
     cy.fixture('user.json').then((user) => {
     cy.get(`#address_${type} > .address_firstname`).should('contain', `${user.title} ${user.firstName} ${user.lastName}`);
     cy.get(`#address_${type} > :nth-child(3)`).should('contain', user.company);
     cy.get(`#address_${type} > :nth-child(4)`).should('contain', user.address);
-    //cy.get(`#address_${type} > :nth-child(5)`).should('contain', user.address2);
+    cy.get(`#address_${type} > :nth-child(5)`).should('contain', user.address2);
 
     cy.get(`#address_${type} > .address_city`).should('contain', user.city);
     cy.get(`#address_${type} > .address_state_name`).should('contain', user.state);
