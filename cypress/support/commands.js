@@ -28,6 +28,7 @@
 
 import { generateCustomerData } from "./fakersutils";
 
+// cart.cy.js
 Cypress.Commands.add('auth', (username, password) =>{
     cy.visit('https://www.saucedemo.com/');
     cy.get('[data-test="username"]').type(username)
@@ -72,6 +73,7 @@ Cypress.Commands.add('dynamicfilename', (prefix) => {
     cy.screenshot(filename);
 })
 
+// registration.cy.js
 Cypress.Commands.add('register', (jsonSource) => {
     cy.readFile('cypress/fixtures/'+jsonSource).then((customers) => {
         cy.get('input[id="customer.firstName"]').type(customers.firstName)
@@ -127,6 +129,7 @@ Cypress.Commands.add('generateData' , () => {
     cy.writeFile('cypress/fixtures/testData.json', testData)
 });
 
+// cart-persistent.cy.js
 Cypress.Commands.add('saveCart', () => {
     cy.window().then((win) => {
       const cart = win.localStorage.getItem('cart-contents') || '[]';
@@ -141,12 +144,13 @@ Cypress.Commands.add('saveCart', () => {
     });
   });
 
+// automation-exercise.cy.js
   Cypress.Commands.add('register2', () => {
     cy.fixture('user.json').then((user) => {
         // should be in login page
         cy.url().should('include', '/login')
-        cy.get('[data-qa="signup-name"]').should('be.visible').type(user.name)
-        cy.get('[data-qa="signup-email"]').should('be.visible').type(user.email)
+        cy.get('[data-qa="signup-name"]').should('be.visible').type(user.name).should('have.value', user.name)
+        cy.get('[data-qa="signup-email"]').should('be.visible').type(user.email).should('have.value', user.email)
         cy.get('[data-qa="signup-button"]').should('be.visible').and('contain','Signup').click()
         // register
         if(user.gender == 1){
@@ -165,20 +169,22 @@ Cypress.Commands.add('saveCart', () => {
 
         cy.get('#newsletter').click()
 
-        cy.get('[data-qa="first_name"]').type(user.firstName)
-        cy.get('[data-qa="last_name"]').type(user.lastName)
-        cy.get('[data-qa="company"]').type(user.company)
-        cy.get('[data-qa="address"]').type(user.address)
-        cy.get('[data-qa="country"]').select(user.country)
-        cy.get('[data-qa="state"]').type(user.state)
-        cy.get('[data-qa="city"]').type(user.city)
-        cy.get('[data-qa="zipcode"]').type(user.zipcode)
-        cy.get('[data-qa="mobile_number"]').type(user.mobileNum)
+        cy.get('[data-qa="first_name"]').type(user.firstName).should('have.value', user.firstName)
+        cy.get('[data-qa="last_name"]').type(user.lastName).should('have.value', user.lastName)
+        cy.get('[data-qa="company"]').type(user.company).should('have.value', user.company)
+        cy.get('[data-qa="address"]').type(user.address).should('have.value', user.address)
+        cy.get('[data-qa="country"]').select(user.country).should('have.value', user.country)
+        cy.get('[data-qa="state"]').type(user.state).should('have.value', user.state)
+        cy.get('[data-qa="city"]').type(user.city).should('have.value', user.city)
+        cy.get('[data-qa="zipcode"]').type(user.zipcode).should('have.value', user.zipcode)
+        cy.get('[data-qa="mobile_number"]').type(user.mobileNum).should('have.value', user.mobileNum)
         // create the account
         cy.get('[data-qa="create-account"]').should('be.visible').click()
+        cy.dynamicfilename('Account-created')
         // goes to home page
         cy.get('[data-qa="continue-button"]').should('be.visible').click()
         cy.get('b').should('contain', user.name)
+        cy.dynamicfilename('Return-to-home-after-reg')
     })
   })
 
@@ -192,7 +198,7 @@ Cypress.Commands.add('saveCart', () => {
     cy.get(`#address_${type} > .address_firstname`).should('contain', `${user.title} ${user.firstName} ${user.lastName}`);
     cy.get(`#address_${type} > :nth-child(3)`).should('contain', user.company);
     cy.get(`#address_${type} > :nth-child(4)`).should('contain', user.address);
-    //cy.get(`#address_${type} > :nth-child(5)`).should('contain', user.city + user.state + user.zipcode);
+    //cy.get(`#address_${type} > :nth-child(5)`).should('contain', user.address2);
 
     cy.get(`#address_${type} > .address_city`).should('contain', user.city);
     cy.get(`#address_${type} > .address_state_name`).should('contain', user.state);
@@ -211,6 +217,7 @@ Cypress.Commands.add('saveCart', () => {
     // verify details
     cy.verifyDetails('delivery')
     cy.verifyDetails('invoice')
+    cy.get('.form-control').should('be.visible').type('Testing if comment works')
     // place order
     cy.contains('Place Order').click();
     cy.fixture('user.json').then((user) => {
@@ -219,11 +226,10 @@ Cypress.Commands.add('saveCart', () => {
         cy.get('[data-qa="cvc"]').should('be.visible').type(user.cvc)
         cy.get('[data-qa="expiry-month"]').should('be.visible').type(user.endMonth)
         cy.get('[data-qa="expiry-year"]').should('be.visible').type(user.endYear)
-        //cy.get('textarea[name="message"]').should('be.visible').type('Testing if comment works')
         cy.get('[data-qa="pay-button"]').should('be.visible').click()
+        cy.dynamicfilename('Checkout success')
         cy.get('[data-qa="continue-button"]').click()
     })
-    
     cy.url().should('contain', 'automationexercise.com')
   })
 
@@ -234,5 +240,6 @@ Cypress.Commands.add('saveCart', () => {
         cy.get('[data-qa="login-button"]').should('be.visible').click()
         // check correct user
         cy.get('b').should('contain', user.name)
+        cy.dynamicfilename('Successful-Login')
     })
   })
