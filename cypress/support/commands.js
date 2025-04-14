@@ -246,3 +246,10 @@ Cypress.Commands.add('saveCart', () => {
         cy.dynamicfilename('Successful-Login')
     })
   })
+
+  // pages
+  Cypress.Commands.add('fillRegistrationForm', (customerData = generateCustomerData()) => {
+    RegistrationPage.fillSignUpForm(customerData);
+    RegistrationPage.submitSignUpForm();
+    RegistrationPage.verifySignUpSuccess(customerData.username);
+  });
