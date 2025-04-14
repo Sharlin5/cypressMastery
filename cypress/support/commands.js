@@ -193,11 +193,15 @@ Cypress.Commands.add('saveCart', () => {
   Cypress.Commands.add('addProduct', () => {
     cy.get('.features_items > :nth-child(3) > .product-image-wrapper > .single-products > .productinfo').should('be.visible').trigger('mouseover')
     cy.get('.features_items > :nth-child(3) > .product-image-wrapper > .single-products > .productinfo > .btn').should('be.visible').click()
+    cy.wait(1000)
+    cy.get('.modal-body > :nth-child(2)').should('be.visible').and('contain', 'View Cart').click()
+    cy.url().should('include', '/view_cart')
   })
 
   Cypress.Commands.add('checkout2', () => {
     // check cart contains 1 
-    cy.contains('Cart').click()
+    //cy.contains('Cart').click()
+    //cy.url().should('include', '/view_cart')
     cy.get('tr#product-1').should('exist')
     // click checkout
     cy.get('a.btn.btn-default.check_out').should('be.visible').and('contain', 'Proceed To Checkout').click();
@@ -215,6 +219,7 @@ Cypress.Commands.add('saveCart', () => {
         cy.get('[data-qa="expiry-year"]').should('be.visible').type(user.endYear)
         cy.get('[data-qa="pay-button"]').should('be.visible').click()
         cy.dynamicfilename('Checkout success')
+        cy.url().should('include', '/payment_done')
         cy.get('[data-qa="continue-button"]').click()
     })
     cy.url().should('contain', 'automationexercise.com')

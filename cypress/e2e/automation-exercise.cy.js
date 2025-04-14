@@ -11,9 +11,6 @@ describe('Automation Excercise Tests', () => {
         // add 1 product
         cy.addProduct()
 
-        // checks cart
-        cy.get('.modal-body > :nth-child(2)').should('be.visible').and('contain', 'View Cart').click()
-        cy.url().should('include', '/view_cart')
         // click checkout
         cy.get('a.btn.btn-default.check_out').should('be.visible').and('contain', 'Proceed To Checkout').click();
         // register
@@ -22,6 +19,8 @@ describe('Automation Excercise Tests', () => {
     
         cy.register2()
         
+        cy.contains('Cart').click()
+        cy.url().should('include', '/view_cart')
         cy.checkout2()
 
         cy.contains('Delete Account').click();
@@ -36,7 +35,7 @@ describe('Automation Excercise Tests', () => {
         cy.register2()
         // checkout
         cy.addProduct()
-
+        
         cy.checkout2()
 
         cy.contains('Delete Account').click();
