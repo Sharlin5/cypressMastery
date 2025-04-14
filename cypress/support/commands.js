@@ -168,6 +168,7 @@ Cypress.Commands.add('saveCart', () => {
         cy.get('[data-qa="years"]').select(user.year)
 
         cy.get('#newsletter').click()
+        //cy.get('#optin').click()
 
         cy.get('[data-qa="first_name"]').type(user.firstName).should('have.value', user.firstName)
         cy.get('[data-qa="last_name"]').type(user.lastName).should('have.value', user.lastName)
@@ -192,27 +193,12 @@ Cypress.Commands.add('saveCart', () => {
   Cypress.Commands.add('addProduct', () => {
     cy.get('.features_items > :nth-child(3) > .product-image-wrapper > .single-products > .productinfo').should('be.visible').trigger('mouseover')
     cy.get('.features_items > :nth-child(3) > .product-image-wrapper > .single-products > .productinfo > .btn').should('be.visible').click()
-})
-
-  Cypress.Commands.add('verifyDetails', (type) => {
-    cy.fixture('user.json').then((user) => {
-    cy.get(`#address_${type} > .address_firstname`).should('contain', `${user.title} ${user.firstName} ${user.lastName}`);
-    cy.get(`#address_${type} > :nth-child(3)`).should('contain', user.company);
-    cy.get(`#address_${type} > :nth-child(4)`).should('contain', user.address);
-    cy.get(`#address_${type} > :nth-child(5)`).should('contain', user.address2);
-
-    cy.get(`#address_${type} > .address_city`).should('contain', user.city);
-    cy.get(`#address_${type} > .address_state_name`).should('contain', user.state);
-    cy.get(`#address_${type} > .address_postcode`).should('contain', user.zipcode);
-
-    cy.get(`#address_${type} > .address_country_name`).should('contain', user.country);
-    cy.get(`#address_${type} > .address_phone`).should('contain', user.mobileNum);
-    })
   })
 
   Cypress.Commands.add('checkout2', () => {
-    // check cart
+    // check cart contains 1 
     cy.contains('Cart').click()
+    cy.get('tr#product-1').should('exist')
     // click checkout
     cy.get('a.btn.btn-default.check_out').should('be.visible').and('contain', 'Proceed To Checkout').click();
     // verify details
@@ -232,6 +218,22 @@ Cypress.Commands.add('saveCart', () => {
         cy.get('[data-qa="continue-button"]').click()
     })
     cy.url().should('contain', 'automationexercise.com')
+  })
+
+  Cypress.Commands.add('verifyDetails', (type) => {
+    cy.fixture('user.json').then((user) => {
+    cy.get(`#address_${type} > .address_firstname`).should('contain', `${user.title} ${user.firstName} ${user.lastName}`);
+    cy.get(`#address_${type} > :nth-child(3)`).should('contain', user.company);
+    cy.get(`#address_${type} > :nth-child(4)`).should('contain', user.address);
+    cy.get(`#address_${type} > :nth-child(5)`).should('contain', user.address2);
+
+    cy.get(`#address_${type} > .address_city`).should('contain', user.city);
+    cy.get(`#address_${type} > .address_state_name`).should('contain', user.state);
+    cy.get(`#address_${type} > .address_postcode`).should('contain', user.zipcode);
+
+    cy.get(`#address_${type} > .address_country_name`).should('contain', user.country);
+    cy.get(`#address_${type} > .address_phone`).should('contain', user.mobileNum);
+    })
   })
 
   Cypress.Commands.add('login2', () => {
