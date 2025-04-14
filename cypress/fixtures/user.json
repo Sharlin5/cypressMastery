@@ -1,0 +1,23 @@
+{
+    "title": "Mr.",
+    "name": "Luca Live",
+    "email": "lucalive@email.com",
+    "gender": "1",
+    "password": "password123",
+    "day": "1",
+    "month": "January",
+    "year": "2017",
+    "firstName": "Luca",
+    "lastName": "Live",
+    "company": "Vertere",
+    "address": "123 Leviste",
+    "country": "Australia",
+    "state": "Victoria",
+    "city": "Melbourne",
+    "zipcode": "3004",
+    "mobileNum": "09123456789",
+    "cardNum": "1248712897819",
+    "cvc": "1234",
+    "endMonth": "03",
+    "endYear": "2030"
+}

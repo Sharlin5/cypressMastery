@@ -140,3 +140,99 @@ Cypress.Commands.add('saveCart', () => {
       win.localStorage.setItem('cart-contents', cart);
     });
   });
+
+  Cypress.Commands.add('register2', () => {
+    cy.fixture('user.json').then((user) => {
+        // should be in login page
+        cy.url().should('include', '/login')
+        cy.get('[data-qa="signup-name"]').should('be.visible').type(user.name)
+        cy.get('[data-qa="signup-email"]').should('be.visible').type(user.email)
+        cy.get('[data-qa="signup-button"]').should('be.visible').and('contain','Signup').click()
+        // register
+        if(user.gender == 1){
+            // Mr
+            cy.get('#uniform-id_gender1').should('be.visible').click()
+        } else if (user.gender == 2){
+            // Mrs
+            cy.get('#uniform-id_gender2').should('be.visible').click()
+        }
+        cy.get('[data-qa="name"]').should('be.visible').and('have.value', user.name);
+        cy.get('[data-qa="email"]').should('be.visible').and('have.value', user.email);
+        cy.get('[data-qa="password"]').should('be.visible').type(user.password)
+        cy.get('[data-qa="days"]').select(user.day)
+        cy.get('[data-qa="months"]').select(user.month)
+        cy.get('[data-qa="years"]').select(user.year)
+
+        cy.get('#newsletter').click()
+
+        cy.get('[data-qa="first_name"]').type(user.firstName)
+        cy.get('[data-qa="last_name"]').type(user.lastName)
+        cy.get('[data-qa="company"]').type(user.company)
+        cy.get('[data-qa="address"]').type(user.address)
+        cy.get('[data-qa="country"]').select(user.country)
+        cy.get('[data-qa="state"]').type(user.state)
+        cy.get('[data-qa="city"]').type(user.city)
+        cy.get('[data-qa="zipcode"]').type(user.zipcode)
+        cy.get('[data-qa="mobile_number"]').type(user.mobileNum)
+        // create the account
+        cy.get('[data-qa="create-account"]').should('be.visible').click()
+        // goes to home page
+        cy.get('[data-qa="continue-button"]').should('be.visible').click()
+        cy.get('b').should('contain', user.name)
+    })
+  })
+
+  Cypress.Commands.add('addProduct', () => {
+    cy.get('.features_items > :nth-child(3) > .product-image-wrapper > .single-products > .productinfo').should('be.visible').trigger('mouseover')
+    cy.get('.features_items > :nth-child(3) > .product-image-wrapper > .single-products > .productinfo > .btn').should('be.visible').click()
+  })
+
+  Cypress.Commands.add('verifyDetails', (type) => {
+    cy.fixture('user.json').then((user) => {
+    cy.get(`#address_${type} > .address_firstname`).should('contain', `${user.title} ${user.firstName} ${user.lastName}`);
+    cy.get(`#address_${type} > :nth-child(3)`).should('contain', user.company);
+    cy.get(`#address_${type} > :nth-child(4)`).should('contain', user.address);
+    //cy.get(`#address_${type} > :nth-child(5)`).should('contain', user.city + user.state + user.zipcode);
+
+    cy.get(`#address_${type} > .address_city`).should('contain', user.city);
+    cy.get(`#address_${type} > .address_state_name`).should('contain', user.state);
+    cy.get(`#address_${type} > .address_postcode`).should('contain', user.zipcode);
+
+    cy.get(`#address_${type} > .address_country_name`).should('contain', user.country);
+    cy.get(`#address_${type} > .address_phone`).should('contain', user.mobileNum);
+    })
+  })
+
+  Cypress.Commands.add('checkout2', () => {
+    // check cart
+    cy.contains('Cart').click()
+    // click checkout
+    cy.get('a.btn.btn-default.check_out').should('be.visible').and('contain', 'Proceed To Checkout').click();
+    // verify details
+    cy.verifyDetails('delivery')
+    cy.verifyDetails('invoice')
+    // place order
+    cy.contains('Place Order').click();
+    cy.fixture('user.json').then((user) => {
+        cy.get('[data-qa="name-on-card"]').should('be.visible').type(user.name)
+        cy.get('[data-qa="card-number"]').should('be.visible').type(user.cardNum)
+        cy.get('[data-qa="cvc"]').should('be.visible').type(user.cvc)
+        cy.get('[data-qa="expiry-month"]').should('be.visible').type(user.endMonth)
+        cy.get('[data-qa="expiry-year"]').should('be.visible').type(user.endYear)
+        //cy.get('textarea[name="message"]').should('be.visible').type('Testing if comment works')
+        cy.get('[data-qa="pay-button"]').should('be.visible').click()
+        cy.get('[data-qa="continue-button"]').click()
+    })
+    
+    cy.url().should('contain', 'automationexercise.com')
+  })
+
+  Cypress.Commands.add('login2', () => {
+    cy.fixture('user.json').then((user) => {
+        cy.get('[data-qa="login-email"]').should('be.visible').type(user.email)
+        cy.get('[data-qa="login-password"]').should('be.visible').type(user.password)
+        cy.get('[data-qa="login-button"]').should('be.visible').click()
+        // check correct user
+        cy.get('b').should('contain', user.name)
+    })
+  })
