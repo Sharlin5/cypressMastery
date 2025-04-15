@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const { defineConfig } = require("cypress");
+const { beforeRunHook, afterRunHook } = require('cypress-mochawesome-reporter/lib');
 
 module.exports = defineConfig({
   projectId: "96srdf",
@@ -14,13 +15,21 @@ module.exports = defineConfig({
     charts: true,
     reportPageTitle: 'custom-title',
     embeddedScreenshots: true,
-    json: false,
     inlineAssets: true,
     saveAllAttempts: false,
   },
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      on('before:run', async (details) => {
+        console.log('override before:run');
+        console.log('Running tests');
+        await beforeRunHook(details);
+      });
+      on('after:run', async () => {
+        console.log('override after:run');
+        await afterRunHook();
+      });
     },
   },
 });

@@ -27,6 +27,7 @@
 /// <reference types ="cypress" />
 
 import { generateCustomerData } from "./fakersutils";
+//import { RegistrationPage } from "./pages/registration.page";
 
 // cart.cy.js
 Cypress.Commands.add('auth', (username, password) =>{
