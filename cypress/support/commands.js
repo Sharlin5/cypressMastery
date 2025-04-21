@@ -27,8 +27,12 @@
 /// <reference types ="cypress" />
 
 import { generateCustomerData } from "./fakersutils";
+import { generateUserData } from "./fakersutils";
 import RegistrationPage  from "./pages/registration.page";
+import autoexregPage from "./pages/autoexreg.page";
 
+// create faker
+const userData = generateUserData()
 // cart.cy.js
 Cypress.Commands.add('auth', (username, password) =>{
     cy.visit('https://www.saucedemo.com/');
@@ -154,6 +158,7 @@ Cypress.Commands.add('saveCart', () => {
         cy.get('[data-qa="signup-email"]').should('be.visible').type(user.email).should('have.value', user.email)
         cy.get('[data-qa="signup-button"]').should('be.visible').and('contain','Signup').click()
         // register
+        //cy.url().should('include', '/')
         if(user.gender == 1){
             // Mr
             cy.get('#uniform-id_gender1').should('be.visible').click()
@@ -169,7 +174,7 @@ Cypress.Commands.add('saveCart', () => {
         cy.get('[data-qa="years"]').select(user.year)
 
         cy.get('#newsletter').click()
-        //cy.get('#optin').click()
+        cy.get('#optin').click()
 
         cy.get('[data-qa="first_name"]').type(user.firstName).should('have.value', user.firstName)
         cy.get('[data-qa="last_name"]').type(user.lastName).should('have.value', user.lastName)
@@ -197,13 +202,14 @@ Cypress.Commands.add('saveCart', () => {
     cy.wait(1000)
     cy.get('.modal-body > :nth-child(2)').should('be.visible').and('contain', 'View Cart').click()
     cy.url().should('include', '/view_cart')
+    cy.dynamicfilename('Product-added')
   })
 
   Cypress.Commands.add('checkout2', () => {
-    // check cart contains 1 
+    // check cart contains 1
     //cy.contains('Cart').click()
     //cy.url().should('include', '/view_cart')
-    cy.get('tr#product-1').should('exist')
+    cy.get('tr#product-1').should('exist') 
     // click checkout
     cy.get('a.btn.btn-default.check_out').should('be.visible').and('contain', 'Proceed To Checkout').click();
     // verify details
@@ -260,3 +266,9 @@ Cypress.Commands.add('saveCart', () => {
     RegistrationPage.submitSignUpForm();
     RegistrationPage.verifySignUpSuccess(customerData.username);
   });
+  
+  // test pages functions
+  Cypress.Commands.add('AETests', () => {
+    autoexregPage.fillSignUpForm()
+    autoexregPage.submitRegisterForm()
+  })

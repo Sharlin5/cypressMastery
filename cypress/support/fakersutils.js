@@ -27,20 +27,20 @@ export function generateUserData(){
   const username = `${usernameBase}${randomNumber}`;
   
   const randomGend = faker.number.int({ min: 1, max: 2 });
-  
 
   return {
     title: "Mr.",
     name: faker.person.fullName(),
-    email: faker.person.email(),
+    email: faker.internet.email(),
     gender: randomGend,
     password: 'password123',
-    day: faker.date.day(),
+    day: '10',
     month: faker.date.month(),
-    year: faker.date.year(),
+    //year: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }).getFullYear(),
+    year: '2013',
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
-    company: faker.company(),
+    company: faker.company.name(),
     address: faker.location.streetAddress(),
     address2: faker.location.streetAddress(),
     country: "Australia",
@@ -48,9 +48,9 @@ export function generateUserData(){
     city: "Melbourne",
     zipcode: "3004",
     mobileNum: "09123456789",
-    cardNum: "1248712897819",
+    cardNum: faker.finance.creditCardNumber(),
     cvc: "1234",
     endMonth: "03",
     endYear: "2030"
-  }
+  };
 }

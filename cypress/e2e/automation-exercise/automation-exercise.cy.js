@@ -7,6 +7,14 @@ describe('Automation Excercise Tests', () => {
         cy.clearAllLocalStorage()
     })
 
+    it('Practice Testing Register with Pages', () => {
+        // sign up
+        cy.contains('Signup / Login').click()
+        cy.AETests()
+        cy.contains('Delete Account').click();
+        cy.get('[data-qa="continue-button"]').click();
+    })
+
     it('Place Order: Register while checkout', () => {
         // add 1 product
         cy.addProduct()
