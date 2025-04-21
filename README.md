@@ -1,6 +1,6 @@
-# Cypress Sauce Demo
+# Cypress Testing Practice
 
-This test automation sample project contains **Sauce demo website** using **Cypress** framework for testing. It includes tests for **Login** feature with the flexibility to run them in **headless** and **headed** modes. 🌐
+This test automation sample project uses the following websites: **Sauce demo, Parabank and Automation Exercise** for **Cypress** practice testing. It includes tests for **Login, Registration and Cart Functionality** feature with the flexibility to run them in **headless** and **headed** modes. Currently all tests are only happy path based. 🌐
 
 ## Table of Contents 📚
 
@@ -38,7 +38,7 @@ npm install cypress --save-dev
 ```
 
 ## Running the Tests 🏃‍♂️
-- We have spec file (a Test Code/File) Login feature, and they can be run in both headless and headed modes.
+- We have spec file (a Test Code/File) and they can be run in both headless and headed modes.
 
 ### Headless Mode 🧑‍💻 (Without Browser UI)
 
@@ -49,20 +49,40 @@ npm install cypress --save-dev
 npm run login-test
 ```
 
+2. Registration Test (Headless)
+- To run the registration test in headless mode:
+
+```bash
+npm run registration-test
+```
+
+3. Automation Exercise Test (Headless)
+- To run the registration test in headless mode:
+
+```bash
+npm run auto-prac-test
+```
+
 
 ### Headed Mode 🖥️ (With Browser UI)
 - In headed mode, the browser runs with a visible UI. This mode is useful for debugging and visual verification of test actions.
 
-1. Login Test (Headed)
-- To run the login test in headed mode:
+- To run the tests in headed mode:
 
 ```bash
 npx cypress open
 ```
 
-- select E2E testing.
-- select a browser.
+- Select E2E testing.
+- Select a browser.
+- Select the spec file you want to test.
+
+#### Note: To change the following tests to be tested. Add .skip to the selected it block to shorted the time it takes to perform tests. (e.g. it.skip(...))
 
 ## Features ✨
 
 - **Login Test**: Automates the login functionality using valid and invalid credentials on the Sauce Demo website.
+
+- **Registration Test**: Automates the registration functionality using valid credentials on the Parabank website. Data driven testing that makes use of Faker and Fixtures. Pages is also used to show ways to improve readability.
+
+- **Automation Exercise**: Automates tests with registration, login and checkout functionality. This makes use of the different techniques to test the given functionalities.
