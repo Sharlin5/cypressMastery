@@ -27,7 +27,7 @@
 /// <reference types ="cypress" />
 
 import { generateCustomerData } from "./fakersutils";
-//import { RegistrationPage } from "./pages/registration.page";
+import RegistrationPage  from "./pages/registration.page";
 
 // cart.cy.js
 Cypress.Commands.add('auth', (username, password) =>{
@@ -254,7 +254,8 @@ Cypress.Commands.add('saveCart', () => {
   })
 
   // pages
-  Cypress.Commands.add('fillRegistrationForm', (customerData = generateCustomerData()) => {
+  Cypress.Commands.add('fillRegistrationForm', () => {
+    const customerData = generateCustomerData();
     RegistrationPage.fillSignUpForm(customerData);
     RegistrationPage.submitSignUpForm();
     RegistrationPage.verifySignUpSuccess(customerData.username);

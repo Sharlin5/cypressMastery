@@ -2,7 +2,7 @@
 
 /// <reference types ="cypress" />
 
-import { generateCustomerData } from "../support/fakersutils"
+import { generateCustomerData } from "../../support/fakersutils"
 
 describe('Registration test flow', () => {
     const fakeUser = generateCustomerData()
@@ -22,7 +22,9 @@ describe('Registration test flow', () => {
 
     // fake user created on registration file
     it('Should successfully register the user with faker', () => {
-        cy.registerFaker(fakeUser)
+        //cy.registerFaker(fakeUser)
+        //testing pages
+        cy.fillRegistrationForm()
     })
 
     // data generated with faker and used with fixture
