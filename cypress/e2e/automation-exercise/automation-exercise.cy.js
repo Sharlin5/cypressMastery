@@ -7,10 +7,12 @@ describe('Automation Excercise Tests', () => {
         cy.clearAllLocalStorage()
     })
 
+    // page contains updated code with added assertions not added on previous functions
+    // this currently does register and delete account only
     it('Practice Testing Register with Pages', () => {
         // sign up
         cy.contains('Signup / Login').click()
-        cy.AETests()
+        cy.AETests() // performs register
         cy.contains('Delete Account').click();
         cy.get('[data-qa="continue-button"]').click();
     })

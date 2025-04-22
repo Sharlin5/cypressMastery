@@ -56,34 +56,46 @@ class AutoExRegistrationPage {
             // Mrs
             cy.get(this.mrsInput).should('be.visible').click()
         }
-        cy.get('[data-qa="name"]').should('be.visible').and('have.value', userData.name);
-        cy.get('[data-qa="email"]').should('be.visible').and('have.value', userData.email);
-        cy.get('[data-qa="password"]').should('be.visible').type(userData.password)
-        cy.get('[data-qa="days"]').select(userData.day)
-        cy.get('[data-qa="months"]').select(userData.month)
-        cy.get('[data-qa="years"]').select(userData.year)
+        cy.get(this.nameInput).should('be.visible').and('have.value', userData.name);
+        cy.get(this.emailInput).should('be.visible').and('have.value', userData.email);
+        cy.get(this.passwordInput).should('be.visible').type(userData.password)
+        cy.get(this.dayInput).select(userData.day)
+        cy.get(this.monthInput).select(userData.month)
+        cy.get(this.yearInput).select(userData.year)
 
         cy.get('#newsletter').click()
         cy.get('#optin').click()
 
-        cy.get('[data-qa="first_name"]').type(userData.firstName).should('have.value', userData.firstName)
-        cy.get('[data-qa="last_name"]').type(userData.lastName).should('have.value', userData.lastName)
-        cy.get('[data-qa="company"]').type(userData.company).should('have.value', userData.company)
-        cy.get('[data-qa="address"]').type(userData.address).should('have.value', userData.address)
-        cy.get('[data-qa="address2"]').type(userData.address2).should('have.value', userData.address2)
-        cy.get('[data-qa="country"]').select(userData.country).should('have.value', userData.country)
-        cy.get('[data-qa="state"]').type(userData.state).should('have.value', userData.state)
-        cy.get('[data-qa="city"]').type(userData.city).should('have.value', userData.city)
-        cy.get('[data-qa="zipcode"]').type(userData.zipcode).should('have.value', userData.zipcode)
-        cy.get('[data-qa="mobile_number"]').type(userData.mobileNum).should('have.value', userData.mobileNum)
+        cy.get(this.firstNameInput).type(userData.firstName).should('have.value', userData.firstName)
+        cy.get(this.lastNameInput).type(userData.lastName).should('have.value', userData.lastName)
+        cy.get(this.companyInput).type(userData.company).should('have.value', userData.company)
+        cy.get(this.addressInput).type(userData.address).should('have.value', userData.address)
+        cy.get(this.address2Input).type(userData.address2).should('have.value', userData.address2)
+        cy.get(this.countryInput).select(userData.country).should('have.value', userData.country)
+        cy.get(this.stateInput).type(userData.state).should('have.value', userData.state)
+        cy.get(this.cityInput).type(userData.city).should('have.value', userData.city)
+        cy.get(this.zipcodeInput).type(userData.zipcode).should('have.value', userData.zipcode)
+        cy.get(this.mobileNumInput).type(userData.mobileNum).should('have.value', userData.mobileNum)
         // create the account
-        cy.get('[data-qa="create-account"]').should('be.visible').click()
+        cy.get(this.createAccButton).should('be.visible').click()
+        // check correct url
+        
         cy.dynamicfilename('Account-created')
         // goes to home page
         cy.get('[data-qa="continue-button"]').should('be.visible').click()
         cy.get('b').should('contain', userData.name)
         cy.dynamicfilename('Return-to-home-after-reg')
     }
+
+    // perform login
+    loginForm(){}
+
+    // check details are correct before checkout
+    verifyDetails(){}
+
+    // checkout
+    checkout(){}
+
 }
 
 export default new AutoExRegistrationPage()
