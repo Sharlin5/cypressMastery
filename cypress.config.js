@@ -9,6 +9,7 @@ module.exports = defineConfig({
   experimentalStudio: true,
   viewportHeight: 1080,
   viewportWidth: 1920,
+  retries: 3,
   defaultCommandTimeout: 60000,
   reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
@@ -18,7 +19,14 @@ module.exports = defineConfig({
     inlineAssets: true,
     saveAllAttempts: false,
   },
+  env: {
+    projectName: process.env.PROJECT_NAME || "Cypress Test Automation",
+    environment: process.env.ENVIRONMENT || "QA",
+    API_KEY: process.env.API_KEY,
+    API_BASE_URL: process.env.API_BASE_URL || 'https://petstore.swagger.io/v2',
+  },
   e2e: {
+    baseUrl: process.env.API_BASE_URL || 'https://petstore.swagger.io/v2',
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on('before:run', async (details) => {

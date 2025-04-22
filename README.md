@@ -2,6 +2,9 @@
 
 This test automation sample project uses the following websites: **Sauce demo, Parabank and Automation Exercise** for **Cypress** practice testing. It includes tests for **Login, Registration and Cart Functionality** feature with the flexibility to run them in **headless** and **headed** modes. Currently all tests are only happy path based. 🌐
 
+*Newly added API Testing with Pet Store API. 
+  - Tests are inconsistent.
+
 ## Table of Contents 📚
 
 - [Installation](#installation)
@@ -86,3 +89,5 @@ npx cypress open
 - **Registration Test**: Automates the registration functionality using valid credentials on the Parabank website. Data driven testing that makes use of Faker and Fixtures. Pages is also used to show ways to improve readability.
 
 - **Automation Exercise**: Automates tests with registration, login and checkout functionality. This makes use of the different techniques to test the given functionalities.
+
+- **API Tests**: Automates API tests for pet store api. Contains tests for pet, users and store endpoints.

@@ -7,7 +7,8 @@
     "login-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/sauce-demo/login.cy.js' --browser chrome",
     "cart-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/sauce-demo/cart.cy.js' --browser chrome",
     "registration-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/parabank/registration.cy.js' --browser chrome",
-    "auto-prac-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/automation-exercise/automation-exercise.cy.js' --browser chrome"
+    "auto-prac-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/automation-exercise/automation-exercise.cy.js' --browser chrome",
+    "api-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/api-testing/pet-store-api.cy.js' --browser chrome"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +18,10 @@
     "@faker-js/faker": "^9.6.0",
     "cypress": "^14.2.1",
     "cypress-mochawesome-reporter": "^3.8.2"
+  },
+  "dependencies": {
+    "cypress-plugin-api": "^2.11.2",
+    "cypress-wait-until": "^3.0.2",
+    "dotenv": "^16.5.0"
   }
 }
