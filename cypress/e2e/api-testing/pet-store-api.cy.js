@@ -1,3 +1,4 @@
+Cypress.config('baseUrl', 'https://petstore.swagger.io/v2');
 
 let petId; // Shared variable to store the pet ID
 let orderId; // Shared variable to store the order ID

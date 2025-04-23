@@ -26,7 +26,7 @@ module.exports = defineConfig({
     API_BASE_URL: process.env.API_BASE_URL || 'https://petstore.swagger.io/v2',
   },
   e2e: {
-    baseUrl: process.env.API_BASE_URL || 'https://petstore.swagger.io/v2',
+    //baseUrl: process.env.API_BASE_URL || 'https://petstore.swagger.io/v2',
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on('before:run', async (details) => {
