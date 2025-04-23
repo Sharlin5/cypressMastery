@@ -5,11 +5,16 @@ let userId; // Shared variable to store the user ID
 
 let usernameTemp // username temporary var
 let passwordTemp // password temporary var
-// {'testIsolation': false},
+/* 
+  For this spec file all test for each describe block uses
+  {'testIsolation': false}
+  This makes it that each it block work in conjunction
+*/
+// Note: Tests are inconsistent
 
-// Tests are inconsistent
 const apiKey = 'special-key';
 
+// PET endpoint
 describe('Pet Store API Tests - PET', {'testIsolation': false}, () => {
   const pet = {
     id: 12345,
@@ -105,9 +110,10 @@ describe('Pet Store API Tests - PET', {'testIsolation': false}, () => {
   });
 });
 
+// STORE Endpoint
 describe('Pet store API test - STORE', {'testIsolation': false}, () => {
     const order = {
-        "id": 123455677642,
+        "id": 12345, // randomly set id
         "petId": 0,
         "quantity": 0,
         "shipDate": "2025-04-22T03:15:20.231Z",
@@ -132,6 +138,7 @@ describe('Pet store API test - STORE', {'testIsolation': false}, () => {
         cy.api({
         method: 'DELETE',
         url: `/store/order/${orderId}`,
+        
         }).then((response) => {
         expect(response.status).to.eq(200)
         });
@@ -170,8 +177,25 @@ describe('Pet store API test - STORE', {'testIsolation': false}, () => {
           expect(response.body).to.have.property('id', orderId)
         });
     });
+
+    it('GET - Ensure no sensitive data is exposed', () => {
+      cy.wrap(orderId).should('exist')
+  
+      cy.api({
+        method: 'GET',
+        url: `/store/inventory`,
+      }).should((response) => {
+        expect(response.body).to.not.have.property('bearer-token')
+        expect(response.body).to.not.have.property('access-token')
+        expect(response.body).to.not.have.property('jwt-token')
+        expect(response.body).to.not.have.property('password')
+        expect(response.body).to.not.have.property('api_key')
+      });
+    });
+
 })
 
+// USERS Endpoint
 // response body does not contain user data, only able to check response status
 describe('Pet store API test - USERS', {'testIsolation': false}, () => {
     const user = {
@@ -197,17 +221,32 @@ describe('Pet store API test - USERS', {'testIsolation': false}, () => {
     }
 
     // use sample user
+    // comment out very inconsitent
+    /*
     it('GET - Find user by username', () => {
         cy.api({
             method: 'GET',
             url: `/user/user1`,
         }).should((response) => {
             expect(response.status).to.eq(200)
+            // Not in response body
             //expect(response.body).to.have.property('username', 'user1')
-            usernameTemp = response.body.username
-            passwordTemp = response.body.password
+            //usernameTemp = response.body.username
+            //passwordTemp = response.body.password
         });
     })
+    */
+
+    // Check error code
+    it('GET - Find user with invalid username', () => {
+      cy.api({
+          method: 'GET',
+          url: `/user/USerDoesNotExist`,
+          failOnStatusCode: false,
+      }).should((response) => {
+          expect(response.status).to.eq(404)
+      });
+  })
 
     it('GET - Login existing user', () => {
         cy.api({
@@ -236,6 +275,18 @@ describe('Pet store API test - USERS', {'testIsolation': false}, () => {
         });
     })
 
+    // get created user
+    it('GET - Find user by username', () => {
+      cy.wrap(user.username).should('exist')
+      cy.wait(1000)
+      cy.api({
+          method: 'GET',
+          url: `/user/${user.username}`,
+      }).should((response) => {
+          expect(response.status).to.eq(200)
+      });
+  })
+
     it('PUT - Update a user', () => {
         cy.api({
             method: 'PUT',
@@ -243,13 +294,16 @@ describe('Pet store API test - USERS', {'testIsolation': false}, () => {
             body: updatedUser,
         }).should((response) => {
             expect(response.status).to.eq(200) // Validate status code
+            usernameTemp = updatedUser.username
         });
     })
 
     it('DELETE - Delete a user', () => {
+        cy.wrap(usernameTemp).should('exist')
+        cy.wait(1000)
         cy.api({
             method: 'DELETE',
-            url: `/user/${user.username}`,
+            url: `/user/${usernameTemp}`,
         }).then((response) => {
             expect(response.status).to.eq(200)
         });
