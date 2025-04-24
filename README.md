@@ -1,16 +1,20 @@
 # Cypress Testing Practice
 
 This test automation sample project makes use of **Cypress** to perform test on different websites. It contains the following sample tests.
+
 **Sauce demo tests**
-  - Login and Cart Functionality tests
+- Login and Cart Functionality tests
+
 **Parabank tests**
-  - Registration tests
+- Registration tests
+
 **Automation Exercise tests**
-  - Registration, Login and Checkout test with continuous flow.
+- Registration, Login and Checkout test with continuous flow.
+
 **API tests**
-  - Performs API tests for the following sample APIs:
-    - https://petstore.swagger.io/v2
-    - https://github.com/Sharlin5/cypress-test-automation-2025/tree/staging
+- Performs API tests for the following sample APIs:
+  - https://petstore.swagger.io/v2
+  - https://github.com/Sharlin5/cypress-test-automation-2025/tree/staging
 
 The tests can be run in **headless** and **headed** modes. 🌐
 
@@ -123,5 +127,12 @@ npx cypress open
 - **Registration Test**: Automates the registration functionality using valid credentials on the Parabank website. Data driven testing that makes use of ***Faker*** and ***Fixtures***. Pages is also used to show ways to improve readability.
 
 - **Automation Exercise**: Automates tests with registration, login and checkout functionality. This makes use of the different techniques to test the given functionalities.
+  - List of tools/functions/techniques used:
+    - Commands
+    - Fakers
+    - Fixtures
+    - Pages
 
-- **API Tests**: Automates API tests for pet store api. Contains tests for pet, users and store endpoints. Note: the tests for this API is inconsistent.
+- **API Tests**: Pet Store API and User API tests
+  - Automates API tests for pet store api. Contains tests for pet, users and store endpoints. Note: the tests for this API is inconsistent.
+  - Automates API tests for a simple user api. Contains api tests for login, registration and view users.
