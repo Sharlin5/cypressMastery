@@ -10,6 +10,8 @@ import { faker } from '@faker-js/faker';
 let userId;
 let createdUserName;
 let createdUserEmail;
+let editedUserName;
+let editedUserEmail;
 
 const newUser = {
     name: faker.person.firstName(),
@@ -93,6 +95,8 @@ describe('User API Tests', () => {
             },
         }).should((response) => {
             expect(response.status).to.eq(200);
+            expect(response.body.user.name).to.eq(editUser.name);
+            expect(response.body.user.email).to.eq(editUser.email);
         });
     })
 
@@ -120,6 +124,7 @@ describe('User API Tests', () => {
             },
         }).should((response) => {
             expect(response.status).to.eq(200);
+            expect(response.body).to.have.property('message', "User deleted");
         });
     })
 });
@@ -164,6 +169,7 @@ describe('User API Tests - Error Handling', () => {
             failOnStatusCode: false,
         }).should((response) => {
             expect(response.status).to.eq(400);
+            expect(response.body).to.have.property('message', "Email already exists");
         })
     })
 
@@ -179,6 +185,7 @@ describe('User API Tests - Error Handling', () => {
             failOnStatusCode: false,
         }).should((response) => {
             expect(response.status).to.eq(400);
+            expect(response.body).to.have.property('message', "All fields required");
         })
     })
 
@@ -193,6 +200,22 @@ describe('User API Tests - Error Handling', () => {
             failOnStatusCode: false,
         }).should((response) => {
             expect(response.status).to.eq(400);
+            expect(response.body).to.have.property('message', "User not found");
+        });
+    })
+
+    it('LOGIN - Should show error message when using incorrect password', () => {
+        cy.api({
+            method: 'POST',
+            url: 'http://localhost:3000/api/users/login',
+            body: {
+                "email": createdUserEmail,
+                "password": 'password112344'
+            },
+            failOnStatusCode: false,
+        }).should((response) => {
+            expect(response.status).to.eq(401);
+            expect(response.body).to.have.property('message', "Invalid password");
         });
     })
 
@@ -211,6 +234,7 @@ describe('User API Tests - Error Handling', () => {
             failOnStatusCode: false,
         }).should((response) => {
             expect(response.status).to.eq(404);
+            expect(response.body).to.have.property('message', "User not found");
         });
     })
 
@@ -228,6 +252,7 @@ describe('User API Tests - Error Handling', () => {
             failOnStatusCode: false,
         }).should((response) => {
             expect(response.status).to.eq(400);
+            expect(response.body).to.have.property('message', "All fields required");
         });
     })
 
@@ -244,6 +269,7 @@ describe('User API Tests - Error Handling', () => {
             failOnStatusCode: false,
         }).should((response) => {
             expect(response.status).to.eq(404);
+            expect(response.body).to.have.property('message', "User not found");
         });
     })
 
@@ -257,6 +283,7 @@ describe('User API Tests - Error Handling', () => {
             failOnStatusCode: false,
         }).should((response) => {
             expect(response.status).to.eq(404);
+            expect(response.body).to.have.property('message', "User not found");
         });
     })
 

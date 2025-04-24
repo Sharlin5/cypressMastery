@@ -285,6 +285,7 @@ describe('Pet store API test - USERS', {'testIsolation': false}, () => {
           url: `/user/${user.username}`,
       }).should((response) => {
           expect(response.status).to.eq(200)
+          expect(response.body).to.have.property('username', user.username)
       });
   })
 
