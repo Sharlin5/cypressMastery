@@ -8,7 +8,10 @@
     "cart-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/sauce-demo/cart.cy.js' --browser chrome",
     "registration-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/parabank/registration.cy.js' --browser chrome",
     "auto-prac-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/automation-exercise/automation-exercise.cy.js' --browser chrome",
-    "api-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/api-testing/pet-store-api.cy.js' --browser chrome"
+    "api-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/api-testing/pet-store-api.cy.js' --browser chrome",
+    "data-tables-test": "npx cypress run --record --key c6cea708-0bee-4c1e-8599-3cae4d43cb1e --spec 'cypress/e2e/data-tables-net/data-tables-net.cy.js' --browser chrome",
+    "data-tables-config": "npx cypress open --config-file data-tables.config.js",
+    "sauce-demo-config": "npx cypress open --config-file saucedemo.config.js"
   },
   "keywords": [],
   "author": "",

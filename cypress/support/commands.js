@@ -272,3 +272,22 @@ Cypress.Commands.add('saveCart', () => {
     autoexregPage.fillSignUpForm()
     autoexregPage.submitRegisterForm()
   })
+
+  Cypress.Commands.add('checkSearch', (keyword) => {
+    cy.get('input[type="search"]').type(keyword)
+
+    cy.wait(500)
+    
+    cy.get('table.dataTable > tbody > tr').then(($rows) => {
+
+      const searchCount = $rows.length;  
+      expect(searchCount).to.be.greaterThan(0)
+        
+      // Check each result row to validate correct data
+      cy.wrap($rows).each(($row) => {
+        cy.wrap($row).find('td').should('contain', keyword)
+      });
+
+      cy.get('#example_info').should('contain', searchCount)
+    });
+  })

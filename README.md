@@ -16,6 +16,18 @@ This test automation sample project makes use of **Cypress** to perform test on 
   - https://petstore.swagger.io/v2
   - https://github.com/Sharlin5/cypress-test-automation-2025/tree/staging
 
+**Recent Update: to be detailed later**
+- Perform cypress tests on table
+  - website: https://datatables.net/
+  - Test titles are not proofread
+  - the current tests are for:
+    - Table visibility check
+    - Search
+    - Sort
+- Tried multiple configs and setup in package.json
+- use data-tables.config.js when testing data-tables-net.cy.js
+- done by performing npm run data-tables-config
+
 The tests can be run in **headless** and **headed** modes. 🌐
 
 ## Table of Contents 📚
